@@ -9,7 +9,7 @@ import { Trophy, Medal, Star, Calendar, Share2, Flame, Lock, CheckCircle2 } from
 interface Habit {
   id: string;
   text: string;
-  completionHistory: string[];
+  completionHistory?: string[];
   currentStreak: number;
   category: string;
 }
@@ -29,6 +29,15 @@ export default function AchievementsPage() {
       }
       setUser(currentUser);
 
+      const recentCompletions = habits.reduce((acc, h) => {
+        const last7Days = h.completionHistory?.filter((d: string) => {
+          const date = new Date(d);
+          const sevenDaysAgo = new Date();
+          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+          return date >= sevenDaysAgo;
+        }).length || 0;
+        return acc + last7Days;
+      }, 0);
       try {
         const result = await getHabits(currentUser.id);
         if (result.success && result.data) {
@@ -110,8 +119,8 @@ export default function AchievementsPage() {
       title: 'Perfectionist',
       icon: <CheckCircle2 className="w-8 h-8 text-green-400" />,
       description: 'Complete all habits today.',
-      locked: habits.length === 0 || habits.some(h => !h.completionHistory.includes(new Date().toISOString().split('T')[0])),
-      progress: habits.length > 0 ? Math.round((habits.filter(h => h.completionHistory.includes(new Date().toISOString().split('T')[0])).length / habits.length) * 100) : 0
+      locked: habits.length === 0 || habits.some(h => !h.completionHistory?.includes(new Date().toISOString().split('T')[0])),
+      progress: habits.length > 0 ? Math.round((habits.filter(h => h.completionHistory?.includes(new Date().toISOString().split('T')[0])).length / habits.length) * 100) : 0
     },
   ];
 
