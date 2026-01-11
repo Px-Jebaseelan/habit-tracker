@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dashboard - Zenith Habitz',
+  title: 'Dashboard - Habit Tracker',
 };
 
 export default function DashboardLayout({

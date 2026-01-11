@@ -16,7 +16,7 @@ export interface AuthSession {
 }
 
 // Client-side session management
-const SESSION_KEY = 'zenith_session';
+const SESSION_KEY = 'habit_tracker_session';
 
 export const getCurrentUser = (): User | null => {
   if (typeof window === 'undefined') return null;

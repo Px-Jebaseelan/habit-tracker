@@ -19,8 +19,9 @@ export default function ShareAchievementModal({
 }: ShareAchievementModalProps) {
   const [copied, setCopied] = useState(false);
 
-  const shareText = `I just unlocked "${achievement}" on Zenith Habitz! 🎉 ${description} Join me in building better habits! 💪`;
-  
+  const shareUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://habittracker.com';
+  const shareText = `I just unlocked the "${achievement}" achievement on Habit Tracker! #HabitTracker`;
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareText);
     setCopied(true);
@@ -58,7 +59,7 @@ export default function ShareAchievementModal({
             <button className="btn-social-share" onClick={handleShareX}>
               <span>𝕏</span> Share on X
             </button>
-            <button 
+            <button
               className={`btn-social-share ${copied ? 'copied' : ''}`}
               onClick={handleCopyLink}
             >

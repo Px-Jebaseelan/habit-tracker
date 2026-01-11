@@ -57,7 +57,7 @@ export default function SettingsPage() {
           setFormData({
             name: freshUser.name || '',
             email: freshUser.email || '',
-            theme: (localStorage.getItem('zenithTheme_FullV1_Final') || 'dark') as 'dark' | 'light',
+            theme: (localStorage.getItem('habit_tracker_theme') || 'dark') as 'dark' | 'light',
           });
         } else {
           // Fallback to session
@@ -65,7 +65,7 @@ export default function SettingsPage() {
           setFormData({
             name: sessionUser.name || '',
             email: sessionUser.email || '',
-            theme: (localStorage.getItem('zenithTheme_FullV1_Final') || 'dark') as 'dark' | 'light',
+            theme: (localStorage.getItem('habit_tracker_theme') || 'dark') as 'dark' | 'light',
           });
         }
       } catch (error) {
@@ -78,7 +78,7 @@ export default function SettingsPage() {
 
   const handleThemeChange = (newTheme: 'dark' | 'light') => {
     setFormData({ ...formData, theme: newTheme });
-    localStorage.setItem('zenithTheme_FullV1_Final', newTheme);
+    localStorage.setItem('habit_tracker_theme', newTheme);
 
     if (newTheme === 'light') {
       document.documentElement.classList.add('light-theme');

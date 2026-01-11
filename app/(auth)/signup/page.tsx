@@ -97,7 +97,7 @@ function SignupContent() {
           <div className="p-10 md:p-14 flex flex-col justify-center">
             <div className="mb-8">
               <h1 className="text-3xl font-black text-white mb-2">Create Your Account</h1>
-              <p className="text-slate-400">Join Zenith Habitz and start building better habits</p>
+              <p className="text-slate-400">Join Habit Tracker and start building better habits</p>
             </div>
 
             <form onSubmit={handleSignup} className="space-y-5">

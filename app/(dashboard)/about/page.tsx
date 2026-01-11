@@ -13,7 +13,7 @@ export default function AboutPage() {
 
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Zenith Habitz</span>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Habit Tracker</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 font-medium max-w-2xl mx-auto">
             Build Better Habits, Transform Your Life
@@ -29,7 +29,7 @@ export default function AboutPage() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Our Mission</h2>
           <p className="text-lg text-slate-400 leading-relaxed">
-            At Zenith Habitz, we believe that small, consistent actions lead to extraordinary results.
+            At Habit Tracker, we believe that small, consistent actions lead to extraordinary results.
             Our mission is to empower millions of people to build positive habits and achieve their goals
             through intelligent tracking, meaningful analytics, and community support.
           </p>
@@ -37,7 +37,7 @@ export default function AboutPage() {
 
         {/* Features Grid */}
         <section>
-          <h2 className="text-3xl font-bold text-white text-center mb-12">Why Zenith Habitz?</h2>
+          <h2 className="text-3xl font-bold text-white text-center mb-12">Why Habit Tracker?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: <Zap size={24} />, title: 'Smart Tracking', desc: 'Track unlimited habits with detailed analytics and insights.' },
@@ -100,7 +100,7 @@ export default function AboutPage() {
             {[
               { name: 'Alex Chen', role: 'Founder & CEO', avatar: '👨‍💼' },
               { name: 'Sarah Williams', role: 'CTO & Lead Engineer', avatar: '👩‍💻' },
-              { name: 'Mike Rodriguez', role: 'Head of Design', avatar: '�‍🎨' },
+              { name: 'Mike Rodriguez', role: 'Head of Design', avatar: '👨‍🎨' },
               { name: 'Emma Johnson', role: 'Community Manager', avatar: '👩‍📊' }
             ].map((member, idx) => (
               <div key={idx} className="text-center p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
@@ -116,13 +116,13 @@ export default function AboutPage() {
         <section className="max-w-2xl mx-auto text-center bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-white/5">
           <h2 className="text-2xl font-bold text-white mb-6">Contact Us</h2>
           <div className="grid gap-6">
-            <a href="mailto:hello@zenithhabitz.com" className="flex items-center justify-center gap-3 text-slate-300 hover:text-white transition-colors p-4 rounded-xl hover:bg-white/5">
+            <a href="mailto:hello@habittracker.com" className="flex items-center justify-center gap-3 text-slate-300 hover:text-white transition-colors p-4 rounded-xl hover:bg-white/5">
               <Mail size={20} />
-              <span>hello@zenithhabitz.com</span>
+              <span>hello@habittracker.com</span>
             </a>
-            <a href="https://twitter.com/zenithhabitz" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 text-slate-300 hover:text-white transition-colors p-4 rounded-xl hover:bg-white/5">
+            <a href="https://twitter.com/habittracker" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 text-slate-300 hover:text-white transition-colors p-4 rounded-xl hover:bg-white/5">
               <Twitter size={20} />
-              <span>@zenithhabitz</span>
+              <span>@habittracker</span>
             </a>
             <div className="flex items-center justify-center gap-3 text-slate-300 p-4">
               <MapPin size={20} />

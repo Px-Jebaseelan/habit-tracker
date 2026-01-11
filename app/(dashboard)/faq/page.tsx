@@ -5,8 +5,8 @@ import { Search, Plus, Minus, HelpCircle, MessageCircle } from 'lucide-react';
 
 const FAQ_ITEMS = [
   {
-    question: 'What is Zenith Habitz?',
-    answer: 'Zenith Habitz is a powerful habit tracking app designed to help you build positive habits and reach your goals. With features like streaks, analytics, and community support, you can stay motivated and accountable.',
+    question: 'What is Habit Tracker?',
+    answer: 'Habit Tracker is a powerful habit tracking app designed to help you build positive habits and reach your goals. With features like streaks, analytics, and community support, you can stay motivated and accountable.',
   },
   {
     question: 'How do I start tracking a habit?',
@@ -71,7 +71,7 @@ export default function FAQPage() {
             Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Questions</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Everything you need to know about Zenith Habitz. Can't find the answer you're looking for? Reach out to our support team.
+            Everything you need to know about Habit Tracker. Can't find the answer you're looking for? Reach out to our support team.
           </p>
         </div>
 

@@ -72,7 +72,7 @@ export default function LoginPage() {
         <div className="p-10 md:p-14 flex flex-col justify-center">
           <div className="mb-10">
             <h1 className="text-3xl font-black text-white mb-2">Welcome Back</h1>
-            <p className="text-slate-400">Sign in to your Zenith Habitz account</p>
+            <p className="text-slate-400">Sign in to your Habit Tracker account</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
@@ -132,7 +132,7 @@ export default function LoginPage() {
           <div className="relative z-10 glass-panel p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/10 max-w-xs rotate-3">
             <div className="text-6xl mb-4">🎯</div>
             <h2 className="text-2xl font-bold mb-2">Build Better Habits</h2>
-            <p className="text-indigo-100/80">Join thousands tracking their daily progress with Zenith Habitz</p>
+            <p className="text-indigo-100/80">Join thousands tracking their daily progress with Habit Tracker</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Authentication - Zenith Habitz',
+  title: 'Authentication - Habit Tracker',
 };
 
 export default function AuthLayout({

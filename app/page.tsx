@@ -30,7 +30,7 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-xl text-slate-400 max-w-lg leading-relaxed text-center lg:text-left mx-auto lg:mx-0">
-                Transform your life with Zenith Habitz. Track, build, and master daily habits with gamification, analytics, and community support.
+                Transform your life with Habit Tracker. Track, build, and master daily habits with gamification, analytics, and community support.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <Link href="/signup" className="px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white font-bold rounded-full shadow-lg shadow-violet-500/25 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">

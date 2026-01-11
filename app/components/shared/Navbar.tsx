@@ -30,7 +30,7 @@ export default function Navbar() {
   }, [pathname]);
 
   const confirmLogout = () => {
-    localStorage.removeItem('zenith_session');
+    localStorage.removeItem('habit_tracker_session');
     setUser(null);
     setIsLogoutModalOpen(false);
     router.push('/');
@@ -72,7 +72,7 @@ export default function Navbar() {
       />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen || isDashboard
+        className={`fixed top-0 left-0 right-0 z-50 border-b-2 border-white/5 transition-all duration-300 ${isScrolled || isMobileMenuOpen || isDashboard
           ? 'bg-slate-900/80 backdrop-blur-md border-b border-white/5 py-4'
           : 'bg-transparent py-6'
           }`}

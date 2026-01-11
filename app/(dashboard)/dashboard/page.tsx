@@ -43,7 +43,7 @@ export default function DashboardPage() {
     }
 
     // Load habits from localStorage
-    const stored = localStorage.getItem('zenithHabitzData_FullV1_Final');
+    const stored = localStorage.getItem('habit_tracker_data');
     const habitsData = stored ? JSON.parse(stored) : [];
     setHabits(habitsData);
 
@@ -80,28 +80,28 @@ export default function DashboardPage() {
 
   // Mock Data Generators (In a real app, this would come from the backend)
   const generateChartData = () => {
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const today = new Date();
-      const data = [];
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date(today);
-        d.setDate(today.getDate() - i);
-        data.push({
-          date: days[d.getDay()],
-          completed: Math.floor(Math.random() * 5) + (i === 0 ? stats.completedToday : 2), // Mock data mixed with real
-          total: 8
-        });
-      }
-      return data;
-    };
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const today = new Date();
+    const data = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      data.push({
+        date: days[d.getDay()],
+        completed: Math.floor(Math.random() * 5) + (i === 0 ? stats.completedToday : 2), // Mock data mixed with real
+        total: 8
+      });
+    }
+    return data;
+  };
 
   const mockActivities = [
-      { id: '1', type: 'completion' as const, title: 'Completed Morning Meditation', habitName: 'Mindfulness', timestamp: '2h ago' },
-      { id: '2', type: 'streak' as const, title: 'Reached 7 Day Streak!', habitName: 'Running', timestamp: '5h ago' },
-      { id: '3', type: 'completion' as const, title: 'Completed Drink Water', habitName: 'Health', timestamp: '6h ago' },
-      { id: '4', type: 'level_up' as const, title: 'Leveled Up to Level 2!', timestamp: '1d ago' },
-      { id: '5', type: 'achievement' as const, title: 'Earned "Early Bird" Badge', timestamp: '2d ago' },
-    ];
+    { id: '1', type: 'completion' as const, title: 'Completed Morning Meditation', habitName: 'Mindfulness', timestamp: '2h ago' },
+    { id: '2', type: 'streak' as const, title: 'Reached 7 Day Streak!', habitName: 'Running', timestamp: '5h ago' },
+    { id: '3', type: 'completion' as const, title: 'Completed Drink Water', habitName: 'Health', timestamp: '6h ago' },
+    { id: '4', type: 'level_up' as const, title: 'Leveled Up to Level 2!', timestamp: '1d ago' },
+    { id: '5', type: 'achievement' as const, title: 'Earned "Early Bird" Badge', timestamp: '2d ago' },
+  ];
 
   return (
     <div className="space-y-8 animate-fade-in pb-10">
