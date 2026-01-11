@@ -37,22 +37,22 @@ export default function RecentActivity({ activities }: RecentActivityProps) {
     };
 
     return (
-        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-6 h-full shadow-lg">
-            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-6 h-full shadow-lg flex flex-col">
+            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2 flex-shrink-0">
                 <span className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20v-6M6 20V10M18 20V4" /></svg>
                 </span>
                 Recent Activity
             </h3>
 
-            <div className="space-y-4">
+            <div className="space-y-4 overflow-y-auto pr-2 flex-1 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
                 {activities.length === 0 ? (
                     <div className="text-center py-8 text-slate-500">
                         <p>No recent activity yet. Start tracking!</p>
                     </div>
                 ) : (
                     activities.map((activity) => (
-                        <div key={activity.id} className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-800/50 transition-colors group">
+                        <div key={activity.id} className="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-800/50 transition-colors group flex-shrink-0">
                             <div className={`mt-1 p-2 rounded-full ${getBackground(activity.type)} border border-white/5`}>
                                 {getIcon(activity.type)}
                             </div>
