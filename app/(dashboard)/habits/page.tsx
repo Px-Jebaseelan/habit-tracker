@@ -17,8 +17,13 @@ import {
   Filter,
   LayoutGrid,
   List,
+  Lightbulb,
 } from 'lucide-react';
 import HabitModal from '@/app/components/dashboard/HabitModal';
+import DeleteConfirmationModal from '@/app/components/modals/DeleteConfirmationModal';
+import HabitDetailsModal from '@/app/components/modals/HabitDetailsModal';
+import HabitTipsModal from '@/app/components/modals/HabitTipsModal';
+import StreakCelebrationModal from '@/app/components/modals/StreakCelebrationModal';
 
 interface Habit {
   id: string;
@@ -49,6 +54,19 @@ export default function HabitsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  // New Modals State
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [habitToDelete, setHabitToDelete] = useState<string | null>(null);
+
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
+
+  const [tipsModalOpen, setTipsModalOpen] = useState(false);
+  const [celebrationData, setCelebrationData] = useState<{ isOpen: boolean; streak: number; habitName: string }>({
+    isOpen: false, streak: 0, habitName: ''
+  });
+
   const [quoteIndex, setQuoteIndex] = useState(0);
 
   const { toasts, showToast } = useToast();
@@ -173,9 +191,21 @@ export default function HabitsPage() {
     try {
       const result = await toggleHabitCompletion(habitId, newDoneState);
       if (result.success && result.data) {
-        setHabits(prev => prev.map(h => h.id === habitId ? (result.data as any) : h));
+        const updatedHabit = result.data as Habit;
+        setHabits(prev => prev.map(h => h.id === habitId ? updatedHabit : h));
+
         if (newDoneState) {
           showToast({ message: 'Habit completed! Great job! 🔥', type: 'success' });
+
+          // Check for milestones to trigger celebration
+          const streak = updatedHabit.currentStreak;
+          if (streak > 0 && (streak === 1 || streak === 3 || streak === 7 || streak % 30 === 0 || streak === 100)) {
+            setCelebrationData({
+              isOpen: true,
+              streak,
+              habitName: updatedHabit.text
+            });
+          }
         }
       } else {
         // Revert
@@ -188,14 +218,19 @@ export default function HabitsPage() {
     }
   };
 
-  const deleteHabitById = async (habitId: string) => {
-    if (!confirm('Are you sure you want to delete this habit?')) return;
+  const openDeleteModal = (habitId: string) => {
+    setHabitToDelete(habitId);
+    setDeleteModalOpen(true);
+  };
 
+  const confirmDeleteHabit = async () => {
+    if (!habitToDelete) return;
+    setIsSaving(true);
     const previousHabits = [...habits];
-    setHabits(prev => prev.filter(h => h.id !== habitId));
+    setHabits(prev => prev.filter(h => h.id !== habitToDelete));
 
     try {
-      const result = await deleteHabit(habitId);
+      const result = await deleteHabit(habitToDelete);
       if (result.success) {
         showToast({ message: 'Habit deleted', type: 'success' });
       } else {
@@ -205,6 +240,10 @@ export default function HabitsPage() {
     } catch (error) {
       setHabits(previousHabits);
       showToast({ message: 'Error deleting habit', type: 'error' });
+    } finally {
+      setIsSaving(false);
+      setDeleteModalOpen(false);
+      setHabitToDelete(null);
     }
   };
 
@@ -416,7 +455,12 @@ export default function HabitsPage() {
                         `}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 cursor-pointer" onClick={() => {
+                    if (!isModalOpen) {
+                      setSelectedHabit(habit);
+                      setDetailsModalOpen(true);
+                    }
+                  }}>
                     <div className={`
                                     w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-lg transition-transform group-hover:scale-110
                                     ${habit.done ? 'bg-emerald-500/20 shadow-emerald-500/10' : 'bg-slate-700/50 shadow-black/20'}
@@ -465,6 +509,16 @@ export default function HabitsPage() {
                 {/* Hover Actions */}
                 <div className="absolute top-4 right-16 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900/80 backdrop-blur rounded-xl p-1 border border-slate-700/50">
                   <button
+                    onClick={() => {
+                      setSelectedHabit(habit);
+                      setTipsModalOpen(true);
+                    }}
+                    className="p-2 rounded-lg text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
+                    title="Tips"
+                  >
+                    <Lightbulb size={16} />
+                  </button>
+                  <button
                     onClick={() => openEditModal(habit)}
                     className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
                     title="Edit"
@@ -479,7 +533,7 @@ export default function HabitsPage() {
                     {habit.isArchived ? <ArchiveRestore size={16} /> : <Archive size={16} />}
                   </button>
                   <button
-                    onClick={() => deleteHabitById(habit.id)}
+                    onClick={() => openDeleteModal(habit.id)}
                     className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                     title="Delete"
                   >
@@ -490,7 +544,48 @@ export default function HabitsPage() {
             ))}
           </div>
         )}
+
+        <DeleteConfirmationModal
+          isOpen={deleteModalOpen}
+          onCancel={() => setDeleteModalOpen(false)}
+          onConfirm={confirmDeleteHabit}
+          title="Delete Habit?"
+          message="Are you sure you want to delete this habit? All your progress and streak history for this habit will be permanently lost."
+          itemName={habits.find(h => h.id === habitToDelete)?.text}
+          isLoading={isSaving}
+        />
+
+        <HabitDetailsModal
+          isOpen={detailsModalOpen}
+          onClose={() => setDetailsModalOpen(false)}
+          habit={selectedHabit}
+          onUpdate={(habitId, data) => {
+            // Optimistic update local
+            setHabits(prev => prev.map(h => h.id === habitId ? { ...h, ...data } : h));
+            // Trigger server update
+            setEditingHabit(habits.find(h => h.id === habitId) || null);
+            handleUpdateHabit(data);
+          }}
+        />
+
+        {selectedHabit && (
+          <HabitTipsModal
+            isOpen={tipsModalOpen}
+            onClose={() => setTipsModalOpen(false)}
+            category={selectedHabit.category}
+            habitText={selectedHabit.text}
+          />
+        )}
+
+        <StreakCelebrationModal
+          isOpen={celebrationData.isOpen}
+          onClose={() => setCelebrationData(prev => ({ ...prev, isOpen: false }))}
+          streak={celebrationData.streak}
+          habitName={celebrationData.habitName}
+        />
       </div>
+
     </div >
+
   );
 }

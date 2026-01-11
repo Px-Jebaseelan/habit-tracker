@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Lightbulb, X, CheckCircle2 } from 'lucide-react';
 
 interface HabitTipsModalProps {
   category: string;
@@ -65,32 +65,62 @@ export default function HabitTipsModal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content modal-lg" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>💡 Tips for "{habitText}"</h2>
-          <button className="modal-close" onClick={onClose}>✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
+      <div
+        className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="p-6 pb-0 flex items-start justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-500 border border-amber-500/20">
+              <Lightbulb size={24} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Pro Tips</h2>
+              <p className="text-slate-400 text-sm truncate max-w-[200px]">{habitText}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-xl"
+          >
+            <X size={20} />
+          </button>
         </div>
 
-        <div className="modal-body">
-          <div className="tips-container">
+        {/* Body */}
+        <div className="p-6">
+          <div className="space-y-4">
             {tips.map((tip, idx) => (
-              <div key={idx} className="tip-item">
-                <div className="tip-number">{idx + 1}</div>
-                <p>{tip}</p>
+              <div
+                key={idx}
+                className="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800 transition-colors"
+                style={{ animationDelay: `${idx * 50}ms` }}
+              >
+                <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 text-xs font-bold flex-shrink-0 mt-0.5">
+                  {idx + 1}
+                </div>
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  {tip}
+                </p>
               </div>
             ))}
           </div>
 
-          <div className="tips-footer">
-            <p className="tips-motivation">
+          <div className="mt-8 p-4 rounded-xl bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/20 text-center">
+            <p className="text-indigo-200 text-sm font-medium">
               💪 Remember: Small consistent actions lead to big changes!
             </p>
           </div>
         </div>
 
-        <div className="modal-footer">
-          <button className="btn-primary" onClick={onClose}>
+        {/* Footer */}
+        <div className="p-6 pt-0">
+          <button
+            onClick={onClose}
+            className="w-full py-3.5 bg-white text-slate-900 rounded-xl font-bold hover:bg-slate-200 transition-colors shadow-lg shadow-white/5"
+          >
             Got it, Thanks!
           </button>
         </div>
