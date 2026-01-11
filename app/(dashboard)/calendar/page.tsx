@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight, CheckCircle2, AlertCircle, XCircle, Calendar
 interface Habit {
   id: string;
   text: string;
-  completionHistory: string[];
+  completionHistory?: string[]; // Make optional to prevent runtime errors
   currentStreak: number;
 }
 
@@ -78,7 +78,7 @@ export default function CalendarPage() {
 
     let completedCount = 0;
     habits.forEach(h => {
-      if (h.completionHistory.includes(dateStr)) {
+      if (h.completionHistory?.includes(dateStr)) {
         completedCount++;
       }
     });
@@ -119,7 +119,7 @@ export default function CalendarPage() {
     const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
     let dayCompletions = 0;
     habits.forEach(h => {
-      if (h.completionHistory.includes(dateStr)) dayCompletions++;
+      if (h.completionHistory?.includes(dateStr)) dayCompletions++;
     });
     monthlyCompletions += dayCompletions;
     if (dayCompletions === habits.length && habits.length > 0) perfectDays++;
