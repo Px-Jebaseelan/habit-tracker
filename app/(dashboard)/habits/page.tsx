@@ -289,7 +289,7 @@ export default function HabitsPage() {
               Your Habits <span className="text-sm bg-slate-800 text-slate-400 px-3 py-1 rounded-full border border-slate-700">{filteredHabits.length}</span>
             </h1>
             <p className="text-slate-400">
-              {MOTIVATIONAL_QUOTES[quoteIndex]}
+              "{MOTIVATIONAL_QUOTES[quoteIndex].text}" — <span className="text-slate-500 font-medium">{MOTIVATIONAL_QUOTES[quoteIndex].author}</span>
             </p>
           </div>
 
@@ -320,8 +320,8 @@ export default function HabitsPage() {
                 key={f}
                 onClick={() => setFilter(f as any)}
                 className={`px-4 py-2 rounded-xl text-sm font-bold capitalize transition-all whitespace-nowrap ${filter === f
-                    ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
                   }`}
               >
                 {f}
@@ -379,8 +379,8 @@ export default function HabitsPage() {
                     onChange={(e) => setNewHabitCategory(e.target.value)}
                     className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all appearance-none"
                   >
-                    {Object.entries(HABIT_CATEGORIES).map(([key, label]) => (
-                      <option key={key} value={key}>{label}</option>
+                    {HABIT_CATEGORIES.map((category) => (
+                      <option key={category.name} value={category.name}>{category.name}</option>
                     ))}
                   </select>
                 </div>
@@ -506,6 +506,6 @@ export default function HabitsPage() {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
