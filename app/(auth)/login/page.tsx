@@ -16,7 +16,7 @@ export default function LoginPage() {
   useEffect(() => {
     const user = getCurrentUser();
     if (user) {
-      router.push('/dashboard');
+      router.replace('/dashboard');
     }
   }, [router]);
   const [password, setPassword] = useState('');
