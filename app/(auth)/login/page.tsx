@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { setCurrentUser } from '@/lib/auth';
+import { setCurrentUser, getCurrentUser } from '@/lib/auth';
 import { useToast } from '@/app/components/shared/Toast';
 import ToastContainer from '@/app/components/shared/Toast';
 import { loginUser } from '@/app/actions/userActions';
@@ -12,6 +12,13 @@ export default function LoginPage() {
   const router = useRouter();
   const { toasts, showToast } = useToast();
   const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [router]);
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

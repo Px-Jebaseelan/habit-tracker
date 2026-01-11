@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { setCurrentUser } from '@/lib/auth';
+import { setCurrentUser, getCurrentUser } from '@/lib/auth';
 import { useToast } from '@/app/components/shared/Toast';
 import ToastContainer from '@/app/components/shared/Toast';
 import { signupUser } from '@/app/actions/userActions';
@@ -16,6 +16,13 @@ function SignupContent() {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [router]);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);

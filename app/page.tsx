@@ -1,7 +1,20 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getCurrentUser } from '@/lib/auth';
 import Link from 'next/link';
 import { PRICING_PLANS } from '@/lib/constants';
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [router]);
   return (
     <div className="min-h-screen bg-slate-900 overflow-x-hidden selection:bg-violet-500/30">
       {/* Hero Section */}
