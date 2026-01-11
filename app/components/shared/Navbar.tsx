@@ -57,8 +57,8 @@ export default function Navbar() {
     { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'Achievements', href: '/achievements' },
     { name: 'Settings', href: '/settings' },
-    { name: 'FAQ', href: '/faq' },
     { name: 'About', href: '/about' },
+    { name: 'FAQ', href: '/faq' },
   ];
 
   const isDashboard = pathname?.startsWith('/dashboard') || pathname?.startsWith('/habits') || pathname?.startsWith('/analytics') || pathname?.startsWith('/settings');
