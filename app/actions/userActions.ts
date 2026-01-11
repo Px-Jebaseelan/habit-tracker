@@ -274,27 +274,27 @@ export async function updateUserProfile(userId: string, data: { name?: string; e
   }
 }
 
-// Get all users (leaderboard)
-export async function getAllUsers() {
+// Get leaderboard users
+export async function getLeaderboard() {
   try {
     await connectDB();
     const users = await UserModel.find()
-      .select('-password')
+      .select('name points level')
       .lean()
-      .sort({ points: -1 });
+      .sort({ points: -1 })
+      .limit(50); // Limit to top 50 for performance
 
     return {
       success: true,
-      data: users.map((user: any) => {
-        const { _id, ...userWithoutId } = user;
-        return {
-          ...userWithoutId,
-          id: _id.toString(),
-        };
-      }),
+      data: users.map((user: any) => ({
+        id: user._id.toString(),
+        name: user.name,
+        points: user.points || 0,
+        level: user.level || 1,
+      })),
     };
   } catch (error) {
-    console.error('Get users error:', error);
-    return { success: false, error: 'Failed to fetch users' };
+    console.error('Get leaderboard error:', error);
+    return { success: false, error: 'Failed to fetch leaderboard' };
   }
 }

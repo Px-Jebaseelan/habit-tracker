@@ -9,6 +9,7 @@ export interface IHabit extends Document {
   category: string;
   done: boolean;
   frequency: string;
+  daysOfWeek: string[];
   streak: number;
   history: Date[];
   isArchived: boolean;
@@ -26,6 +27,7 @@ const HabitSchema = new Schema<IHabit>(
     category: { type: String, default: 'general' },
     done: { type: Boolean, default: false },
     frequency: { type: String, default: 'daily' },
+    daysOfWeek: [{ type: String }],
     streak: { type: Number, default: 0 },
     history: [{ type: Date }],
     isArchived: { type: Boolean, default: false },

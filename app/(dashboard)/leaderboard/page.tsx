@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllUsers } from '@/app/actions/userActions';
+import { getLeaderboard } from '@/app/actions/userActions';
 import { getCurrentUser } from '@/lib/auth';
-import { Trophy, Medal, Crown, Users, Globe, Search, ArrowUp, Star } from 'lucide-react';
+import { Trophy, Medal, Crown, Search } from 'lucide-react';
 
 interface LeaderboardUser {
   id: string;
@@ -14,7 +14,6 @@ interface LeaderboardUser {
 }
 
 export default function LeaderboardPage() {
-  const [activeTab, setActiveTab] = useState<'global' | 'friends'>('global');
   const [users, setUsers] = useState<LeaderboardUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const currentUser = getCurrentUser();
@@ -22,11 +21,9 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const result = await getAllUsers();
+        const result = await getLeaderboard();
         if (result.success) {
-          // Sort users by points descending for the mockup
-          const sortedUsers = (result.data as LeaderboardUser[]).sort((a, b) => (b.points || 0) - (a.points || 0));
-          setUsers(sortedUsers);
+          setUsers(result.data as LeaderboardUser[]);
         }
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -55,30 +52,6 @@ export default function LeaderboardPage() {
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="max-w-md mx-auto bg-slate-800/50 p-1.5 rounded-2xl flex relative mb-16 border border-slate-700/50">
-          <button
-            onClick={() => setActiveTab('global')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all relative z-10 ${activeTab === 'global' ? 'text-white shadow-lg' : 'text-slate-400 hover:text-white'
-              }`}
-          >
-            <Globe size={16} /> Global
-          </button>
-          <button
-            onClick={() => setActiveTab('friends')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all relative z-10 ${activeTab === 'friends' ? 'text-white shadow-lg' : 'text-slate-400 hover:text-white'
-              }`}
-          >
-            <Users size={16} /> Friends
-          </button>
-
-          {/* Active Tab Background Animation */}
-          <div
-            className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-violet-600 rounded-xl transition-all duration-300 ease-out ${activeTab === 'global' ? 'left-1.5' : 'left-[calc(50%+4px)]'
-              }`}
-          />
-        </div>
-
         {isLoading ? (
           <div className="flex justify-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-violet-500"></div>
@@ -86,7 +59,7 @@ export default function LeaderboardPage() {
         ) : (
           <>
             {/* Podium (Only show if we have users) */}
-            {topThree.length > 0 && activeTab === 'global' && (
+            {topThree.length > 0 && (
               <div className="flex justify-center items-end gap-4 md:gap-8 mb-16 h-64 md:h-80">
                 {/* 2nd Place */}
                 {topThree[1] && (
@@ -141,19 +114,15 @@ export default function LeaderboardPage() {
             {/* List View */}
             <div className="max-w-4xl mx-auto bg-slate-800/30 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden">
               <div className="p-6 border-b border-white/5 flex items-center gap-4">
-                <Search className="text-slate-500" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search users..."
-                  className="bg-transparent border-none outline-none text-white placeholder-slate-500 w-full"
-                />
+                <Trophy className="text-slate-500" size={20} />
+                <h3 className="text-lg font-bold text-white">Top 50 Players</h3>
               </div>
 
               <div className="divide-y divide-white/5">
                 {topThree.length === 0 && <div className="p-8 text-center text-slate-500">No users found.</div>}
 
-                {(activeTab === 'global' ? restUsers : users).map((user, idx) => {
-                  const rank = activeTab === 'global' ? idx + 4 : idx + 1;
+                {restUsers.map((user, idx) => {
+                  const rank = idx + 4;
                   return (
                     <div key={user.id} className={`flex items-center p-4 md:p-6 hover:bg-white/5 transition-colors ${user.id === currentUser?.id ? 'bg-violet-500/10 border-l-4 border-violet-500' : ''}`}>
                       <div className="w-12 text-center font-black text-slate-500 text-lg">#{rank}</div>
@@ -175,8 +144,8 @@ export default function LeaderboardPage() {
 
                       <div className="text-right">
                         <div className="font-black text-white text-lg">{user.points}</div>
-                        <div className="text-xs text-emerald-400 font-bold flex items-center justify-end gap-1">
-                          <ArrowUp size={12} /> 12 pts
+                        <div className="text-xs text-slate-500 font-bold">
+                          POINTS
                         </div>
                       </div>
                     </div>
