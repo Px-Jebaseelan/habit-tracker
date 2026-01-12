@@ -96,17 +96,18 @@ export default function AboutPage() {
         {/* Team Section */}
         <section className="pb-12">
           <h2 className="text-3xl font-bold text-white text-center mb-12">Meet the Team</h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {[
-              { name: 'Alex Chen', role: 'Founder & CEO', avatar: '👨‍💼' },
-              { name: 'Sarah Williams', role: 'CTO & Lead Engineer', avatar: '👩‍💻' },
-              { name: 'Mike Rodriguez', role: 'Head of Design', avatar: '👨‍🎨' },
-              { name: 'Emma Johnson', role: 'Community Manager', avatar: '👩‍📊' }
+              { name: 'M. Aiyisha Lamya', role: 'Team Lead', avatar: '👩‍💼' },
+              { name: 'P. Surya Prakash', role: 'Lead Developer', avatar: '👨‍💻' },
+              { name: 'A. Mohammed Fareed', role: 'Backend Engineer', avatar: '👨‍🔧' },
+              { name: 'S. Mohammed Hasam', role: 'Frontend Developer', avatar: '👨‍🎨' },
+              { name: 'A.H. Ashik Rahuman', role: 'UI/UX Designer', avatar: '👨‍🎨' }
             ].map((member, idx) => (
               <div key={idx} className="text-center p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
                 <div className="text-4xl mb-4 transform hover:scale-110 transition-transform cursor-default">{member.avatar}</div>
-                <h3 className="text-lg font-bold text-white">{member.name}</h3>
-                <p className="text-slate-400 text-sm">{member.role}</p>
+                <h3 className="text-lg font-bold text-white uppercase tracking-wider">{member.name}</h3>
+                <p className="text-slate-400 text-sm mt-1">{member.role}</p>
               </div>
             ))}
           </div>
